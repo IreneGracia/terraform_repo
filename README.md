@@ -145,7 +145,7 @@ with a remote backend and a dedicated least-privilege identity behind manual app
 
 ## Additional comments
 
-> The GCP `project_id` must be globally unique across all of GCP. The
-> default `blockchain-cash-analysis` is already in use, so anyone reproducing this
-> must set their own unique project ID.
+The GCP `project_id` must be globally unique across all of GCP. The
+default `blockchain-cash-analysis` is already in use, so anyone reproducing this
+must set their own unique project ID.
 
