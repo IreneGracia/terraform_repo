@@ -1,10 +1,12 @@
 resource "google_bigquery_dataset" "staging" {
   dataset_id                 = var.staging_dataset_id
   location                   = var.bigquery_location
-  friendly_name              = "Staging" #human-readable console display, cosmetic
+  friendly_name              = "Staging"
   project                    = google_project.blockchain_cash_analysis.project_id
-  deletion_policy            = "DELETE" #default anyway;
-  delete_contents_on_destroy = true     #we need this as tables are created by dbt and terraform therefore does not know about them,
+  deletion_policy            = "DELETE"
+  delete_contents_on_destroy = true
+
+  # Tables are created by dbt and terraform therefore does not know about them,
   #so with a different policy any attempt at deleting a dataset will encoutner tables inside and fail
 
   # Wait until the BigQuery API is enabled (no implicit ref to it otherwise).
