@@ -6,7 +6,7 @@ GitHub Actions to GCP authentication.
 
 ## Role in the data pipeline
 
-This repo builds the **landing zone and identity layer** that the
+This repo builds the landing zone and identity layer that the
 [`dbt_repo`](../dbt_repo/README.md) transformations run on top of. Concretely, it sets up:
 
 - **Where data lands** — two BigQuery datasets, `staging` and `mart`, that dbt
@@ -14,7 +14,7 @@ This repo builds the **landing zone and identity layer** that the
 - **Who moves the data** — a least-privilege `dbt-runner` service account that can
   run BigQuery jobs (to read the public source) and write only to those two datasets.
 - **How CI authenticates** — Workload Identity Federation so GitHub Actions can act
-  as that service account with **no downloaded key**, plus the repo secrets/variables
+  as that service account with no downloaded key, plus the repo secrets/variables
   dbt's CI needs.
 
 ## What it provisions
@@ -30,8 +30,8 @@ This repo builds the **landing zone and identity layer** that the
 
 ## Project structure
 
-The table above covers the files that **create cloud resources**; the table below
-covers **every** file and what it's for.
+The table above covers the files that create cloud resources; the table below
+covers every file and what it's for.
 
 ```
 terraform_repo/
@@ -52,7 +52,7 @@ terraform_repo/
 
 | File | Role |
 |------|------|
-| `gcp_project.tf` · `services.tf` · `bigquery.tf` · `IAM.tf` · `WIF.tf` · `github_actions.tf` | The **resource** files; see [What it provisions](#what-it-provisions). |
+| `gcp_project.tf` · `services.tf` · `bigquery.tf` · `IAM.tf` · `WIF.tf` · `github_actions.tf` | The resource files; see [What it provisions](#what-it-provisions). |
 | [`providers.tf`](providers.tf) | Configures the `google` and `github` providers (region, GitHub owner/token). |
 | [`variables.tf`](variables.tf) | Declares all input variables and the "at most one parent (org/folder)" validation. |
 | [`terraform.tf`](terraform.tf) | Pins the Terraform version (≥ 1.10) and provider versions; documents the local state choice. |
@@ -69,7 +69,7 @@ terraform_repo/
 
 ## Configuration
 
-Inputs are **not committed** — `terraform.tfvars` is git-ignored, and the token is
+Inputs are not committed: `terraform.tfvars` is git-ignored, and the token is
 env-only. Set them via a local `terraform.tfvars` and one env var:
 
 **Required (no defaults):**
