@@ -12,6 +12,7 @@ resource "google_iam_workload_identity_pool" "github_pook" {
 
 resource "google_iam_workload_identity_pool_provider" "github" {
   project = google_project.blockchain_cash_analysis.project_id
+
   # Reference the pool resource (not the raw var) so Terraform creates the pool
   # before the provider that lives inside it.
   workload_identity_pool_id          = google_iam_workload_identity_pool.github_pook.workload_identity_pool_id
@@ -37,8 +38,8 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 
 
 # Let GitHub Actions runs from the dbt repo impersonate the dbt service account
-# (keyless). The principalSet is the set of identities from this pool whose
-# `repository` attribute matches owner/repo.
+# The principalSet is the set of identities from this pool whose repository
+# attribute matches owner/repo.
 resource "google_service_account_iam_member" "github_wif" {
   service_account_id = google_service_account.dbt.name
   role               = "roles/iam.workloadIdentityUser"

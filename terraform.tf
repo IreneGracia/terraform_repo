@@ -13,9 +13,8 @@ terraform {
     }
   }
 
-  # State is kept LOCAL (terraform.tfstate) for this single-environment challenge
-  # — it keeps the project runnable with a plain `terraform init` and no external
-  # bootstrap. For a real multi-environment, multi-engineer setup you'd switch to
-  # a remote backend (e.g. GCS) with state locking and per-environment isolation.
-  # The local state files are git-ignored (see .gitignore).
+  # State is kept local (terraform.tfstate) for this single-environment challenge
+  # as it keeps the project runnable with a plain `terraform init` and no external
+  # bootstrap. For a real multi-environment, multi-engineer setup it would be optimal to
+  # switch to a remote backend (e.g. GCS) with state locking and per-environment isolation.
 }

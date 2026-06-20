@@ -4,7 +4,7 @@ on:
 permissions:
   id-token: write   # lets the job request an OIDC token to send to GCP
   pull-requests: write
-  contents: read    # lets it checkout the repo
+  contents: read    
 
 jobs:
   validate:

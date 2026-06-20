@@ -1,3 +1,5 @@
+# Publishes CI config into the dbt repo: GCP project id & location as Actions variables, WIF provider & SA email as secrets.
+#
 #have to be resources, not variables, because TF creates (and manages) them, as opposed to variables
 #which are user fed
 

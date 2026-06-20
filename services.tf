@@ -1,11 +1,12 @@
 # API enablement.
-#
+
 # A brand-new GCP project has nearly every API disabled, so each must be turned
 # on (via the Service Usage API) before Terraform can create resources that use
 # it. Enabling is itself an API call, so these depend implicitly on the project
 # existing (via project_id), and every API-using resource elsewhere depends on
-# this block — see the `depends_on` on the datasets, service account, and WIF
+# this block: see the `depends_on` on the datasets, service account, and WIF
 # pool.
+
 resource "google_project_service" "required" {
   for_each = toset([
     "cloudresourcemanager.googleapis.com", # the project + project-level IAM bindings

@@ -1,5 +1,5 @@
-# No `project` is set here: this config *creates* the project, and every resource
-# sets its own `project` explicitly, so there is no sensible default to pin.
+
+# Provider configuration: the google and github providers used to create this project's resources.
 provider "google" {
   region = var.region
 }
