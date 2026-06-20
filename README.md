@@ -142,3 +142,10 @@ with a remote backend and a dedicated least-privilege identity behind manual app
 - **Least privilege**: `jobUser` at project level; `dataEditor` only on the two owned datasets.
 - **`auto_create_network = false`**: the default VPC isn't needed and widens the attack surface.
 - **`US` BigQuery location**: must match the public source dataset (BigQuery can't join across locations).
+
+## Additional comments
+
+> The GCP `project_id` must be globally unique across all of GCP. The
+> default `blockchain-cash-analysis` is already in use, so anyone reproducing this
+> must set their own unique project ID.
+
