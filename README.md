@@ -4,6 +4,24 @@ Infrastructure as Code for the challenge: creates the Google Cloud project, the
 BigQuery datasets dbt writes to, the service account dbt runs as, and the keyless
 GitHub Actions → GCP authentication.
 
+## Role in the data pipeline
+
+This repo builds the **landing zone and identity layer** that the
+[`dbt_repo`](../dbt_repo/README.md) transformations run on top of — no data moves
+here, but nothing can move without it. Concretely it sets up:
+
+- **Where data lands** — two BigQuery datasets, `staging` and `mart`, that dbt
+  materialises its models into.
+- **Who moves the data** — a least-privilege `dbt-runner` service account that can
+  run BigQuery jobs (to read the public source) and write only to those two datasets.
+- **How CI authenticates** — Workload Identity Federation so GitHub Actions can act
+  as that service account with **no downloaded key**, plus the repo secrets/variables
+  dbt's CI needs.
+
+So the end-to-end picture is: **Terraform provisions the project + datasets + identity →
+dbt (in CI, as the `dbt-runner` SA) reads the public Bitcoin Cash table and writes the
+`staging` and `mart` tables into the datasets created here.**
+
 ## What it provisions
 
 | File | Resource(s) |
@@ -80,10 +98,6 @@ use a **remote GCS backend** with state locking and per-environment isolation.
 
 ## CI
 
-<<<<<<< Updated upstream
-[`.github/workflows/tf_ci.yml`](.github/workflows/tf_ci.yml) runs `fmt`, `init`,
-and `validate` on pull requests.
-=======
 [`.github/workflows/tf_ci.yml`](.github/workflows/tf_ci.yml) runs `fmt -check`,
 `init -backend=false`, and `validate` on pull requests — **static checks only**.
 It never runs `plan`/`apply`, never loads state, and never authenticates to GCP,
@@ -94,7 +108,6 @@ which needs org-level `projectCreator` + billing permissions — too privileged 
 hand an automated pipeline. Provisioning is therefore a manual, local
 `terraform apply`. (A production GitOps setup would do plan-on-PR + apply-on-merge
 with a remote backend and a dedicated least-privilege identity behind manual approval.)
->>>>>>> Stashed changes
 
 ## Design choices
 
