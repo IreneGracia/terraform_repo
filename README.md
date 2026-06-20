@@ -1,4 +1,4 @@
-# Terraform — GCP infrastructure
+# Terraform repo: GCP infrastructure
 
 Infrastructure as Code for the challenge: creates the Google Cloud project, the
 BigQuery datasets dbt writes to, the service account dbt runs as and the keyless
