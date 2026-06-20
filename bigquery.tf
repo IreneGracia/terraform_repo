@@ -5,7 +5,7 @@ resource "google_bigquery_dataset" "staging" {
   project                    = google_project.blockchain_cash_analysis.project_id
   deletion_policy            = "DELETE"
   delete_contents_on_destroy = true
-  
+
   # Tables are created by dbt and terraform therefore does not know about them,
   #so with a different policy any attempt at deleting a dataset will encoutner tables inside and fail
 
