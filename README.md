@@ -163,8 +163,30 @@ contain sensitive values and must never be committed.
 
 ## CI
 
-[`.github/workflows/tf_ci.yml`](.github/workflows/tf_ci.yml) runs `fmt`, `init`,
-and `validate` on pull requests.
+[`.github/workflows/tf_ci.yml`](.github/workflows/tf_ci.yml) runs `fmt -check`,
+`init -backend=false`, and `validate` on pull requests. These are **static checks
+only** — the workflow never runs `plan` or `apply`, never loads state, and never
+authenticates to GCP, so a pull request makes **no changes to any cloud
+resources**.
+
+### Why CI doesn't `apply`
+
+Applying infrastructure from CI is deliberately avoided here because this config
+**creates a GCP project and links a billing account**. To `apply` from CI, the
+pipeline's identity would need **org-level `resourcemanager.projectCreator` and
+billing permissions** — a very privileged credential to hand to an automated
+workflow, and a large blast radius if the repo or a token were ever compromised.
+
+For a single-environment take-home, the safer split is **validate in CI, `apply`
+locally**: provisioning is a manual `terraform apply` run by a human with the
+appropriate permissions (see [Deploying for real](#deploying-for-real)), while CI
+just guards code quality.
+
+> **Production evolution:** a real GitOps setup would run `terraform plan` on the
+> PR (posted as a comment for review) and `terraform apply` on merge to `main`,
+> backed by a remote state backend with locking and a dedicated, least-privilege
+> CI identity gated behind manual approval. That's intentionally out of scope for
+> this challenge.
 
 ## Design choices
 
