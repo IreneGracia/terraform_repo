@@ -33,6 +33,38 @@ dbt (in CI, as the `dbt-runner` SA) reads the public Bitcoin Cash table and writ
 | [`WIF.tf`](WIF.tf) | Workload Identity Pool + GitHub OIDC provider, locked to this repo — lets Actions impersonate the SA with **no key**. |
 | [`github_actions.tf`](github_actions.tf) | Writes the WIF provider, SA email, project id, and location into the dbt repo as Actions secrets & variables. |
 
+## Project structure
+
+The table above covers the files that **create cloud resources**; the table below
+covers **every** file and what it's for.
+
+```
+terraform_repo/
+├── gcp_project.tf              # the GCP project resource
+├── services.tf                 # enables the required GCP APIs
+├── bigquery.tf                 # staging + mart datasets
+├── IAM.tf                      # dbt-runner service account + roles
+├── WIF.tf                      # keyless GitHub Actions → GCP auth (WIF)
+├── github_actions.tf           # pushes CI secrets/variables into the dbt repo
+├── providers.tf                # google + github provider config
+├── variables.tf                # input variable definitions (+ validation)
+├── terraform.tf                # required Terraform/provider versions; state config
+├── terraform.tfvars            # your input values — git-ignored, never committed
+├── .gitignore                  # excludes state, .terraform/, tfvars
+└── .github/workflows/
+    └── tf_ci.yml               # PR CI: fmt-check · init · validate
+```
+
+| File | Role |
+|------|------|
+| `gcp_project.tf` · `services.tf` · `bigquery.tf` · `IAM.tf` · `WIF.tf` · `github_actions.tf` | The **resource** files — see [What it provisions](#what-it-provisions). |
+| [`providers.tf`](providers.tf) | Configures the `google` and `github` providers (region, GitHub owner/token). |
+| [`variables.tf`](variables.tf) | Declares all input variables and the "at most one parent (org/folder)" validation. |
+| [`terraform.tf`](terraform.tf) | Pins the Terraform version (≥ 1.10) and provider versions; documents the local-state choice. |
+| `terraform.tfvars` | Your environment-specific values. **Git-ignored** — see [Configuration](#configuration). |
+| [`.gitignore`](.gitignore) | Keeps state files, `.terraform/`, and `terraform.tfvars` out of version control. |
+| [`.github/workflows/tf_ci.yml`](.github/workflows/tf_ci.yml) | PR CI — static validation only (`fmt -check`, `init -backend=false`, `validate`). |
+
 ## Prerequisites
 
 - **Terraform ≥ 1.10**, **gcloud**, optional **gh** — `brew install terraform google-cloud-sdk gh`
