@@ -9,11 +9,11 @@ GitHub Actions to GCP authentication.
 This repo builds the landing zone and identity layer that the
 [`dbt_repo`](../dbt_repo/README.md) transformations run on top of. Concretely, it sets up:
 
-- **Where data lands** — two BigQuery datasets, `staging` and `mart`, that dbt
+- **Where data lands**: two BigQuery datasets, `staging` and `mart`, that dbt
   materialises its models into.
-- **Who moves the data** — a least-privilege `dbt-runner` service account that can
+- **Who moves the data**: a least-privilege `dbt-runner` service account that can
   run BigQuery jobs (to read the public source) and write only to those two datasets.
-- **How CI authenticates** — Workload Identity Federation so GitHub Actions can act
+- **How CI authenticates**: Workload Identity Federation so GitHub Actions can act
   as that service account with no downloaded key, plus the repo secrets/variables
   dbt's CI needs.
 
