@@ -1,0 +1,20 @@
+# Local Terraform state — may contain sensitive values, never commit.
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Provider plugins and init artifacts
+.terraform/
+.terraform.lock.hcl
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Variable values — never commit. terraform.tfvars holds real, environment-
+# specific inputs (org_id, billing_account, etc.); the github_token is passed via
+# the environment only. See the README "Configuration" section for what to set.
+terraform.tfvars
+*_override.tf
+*_override.tf.json
+*.auto.tfvars
