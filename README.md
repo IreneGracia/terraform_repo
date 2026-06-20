@@ -62,9 +62,9 @@ terraform_repo/
 
 ## Prerequisites
 
-- **Terraform ≥ 1.10**, **gcloud**, optional **gh** — `brew install terraform google-cloud-sdk gh`
-- A GCP **billing account** and rights to create projects: `resourcemanager.projectCreator` on the org/folder and `roles/ billing.user` on the billing account.
-- A GitHub **fine-grained PAT** scoped to the dbt repo (Secrets r/w, Variables r/w, Metadata r).
+- Terraform ≥ 1.10, gcloud, optional gh: `brew install terraform google-cloud-sdk gh`
+- A GCP billing account and rights to create projects: `resourcemanager.projectCreator` on the org/folder and `roles/ billing.user` on the billing account.
+- A GitHub fine-grained PAT scoped to the dbt repo (Secrets r/w, Variables r/w, Metadata r).
 - `gcloud auth application-default login` so Terraform can act as you.
 
 ## Configuration
